@@ -2,21 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('sans docker') {
+        stage('build') {
+            agent{
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
             steps {
-                sh 'echo "hello  world"'
-                sh 'touch sanscon.txt'
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -la
+
+                '''
+               
             }
         }
         
-        stage('avec docker'){
-            agent { docker { image 'node:18-alpine'
-                                reuseNode true                 } }
-            
-            steps {
-                sh 'echo "hello docker world"'
-                sh 'touch aveccont.txt'
-            }
-        }
+  
     }
 }
