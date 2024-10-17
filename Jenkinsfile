@@ -13,16 +13,19 @@ pipeline {
             steps {
                 sh '''
                 echo "hani njareb"
+                pwd
+                ls -al  # Check workspace
                 npm ci
                 npm run build
                 '''
             }
         }
 
-        stage ('test'){
-            steps{
+        stage('test') {
+            steps {
                 echo "test stages"
             }
         }
     }
 }
+
