@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('deploy') {
+        stage('test') {  // Renamed second 'build' to avoid name conflict
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -40,7 +40,7 @@ pipeline {
             }
         }
     
-        stage('build') {
+        stage('bdeploy') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -50,17 +50,15 @@ pipeline {
 
             steps {
                 sh '''
-               npm install netlify-cli -g
-
-
+                npm install netlify-cli -g
                 '''
             }
         }
+    }
 
     post {
         always {
             sh 'ls -al build/ || echo "Build folder not found"'
         }
-    }
     }
 }
