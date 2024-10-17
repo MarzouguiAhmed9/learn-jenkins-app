@@ -39,7 +39,7 @@ pipeline {
                  '''
             }
         }
-    }
+    
         stage('build') {
             agent {
                 docker {
@@ -61,5 +61,6 @@ pipeline {
         always {
             sh 'ls -al build/ || echo "Build folder not found"'
         }
+    }
     }
 }
