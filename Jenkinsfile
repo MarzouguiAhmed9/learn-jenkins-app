@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh '''
                 echo "hani njareb"
-                npm install
+                npm ci
                 npm run build
                 '''
             }
