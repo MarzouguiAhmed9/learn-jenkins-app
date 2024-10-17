@@ -13,10 +13,9 @@ pipeline {
             steps {
                 sh '''
                 echo "hani njareb"
-                pwd
-                ls -al  # Check workspace
                 npm ci
                 npm run build
+                ls -al build/
                 '''
             }
         }
@@ -31,11 +30,20 @@ pipeline {
 
             steps {
                 sh ''' 
-                 test -f build/index.html
+                 if [ -f build/index.html ]; then
+                   echo "Build folder exists and contains index.html"
+                 else
+                   echo "Build folder or index.html is missing!"
+                 fi
                  npm test
                  '''
+            }
         }
     }
-}
 
+    post {
+        always {
+            sh 'ls -al build/ || echo "Build folder not found"'
+        }
+    }
 }
